@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brilliant Offer — Sell Your Diamond</title>
+<meta name="description" content="Get a fast, fair cash offer for your diamond jewelry. Submit your details and photos for a free, no-obligation valuation.">
+<style>
+  :root{
+    --bg:#0b0f1a;
+    --bg-soft:#111726;
+    --panel:#141b2d;
+    --panel-2:#1a2338;
+    --line:#26304a;
+    --text:#eef2fb;
+    --muted:#9aa6c2;
+    --gold:#d9b871;
+    --gold-2:#f0d79b;
+    --accent:#6ea8fe;
+    --danger:#ff8080;
+    --ok:#7ee0a8;
+    --radius:14px;
+    --shadow:0 20px 60px rgba(0,0,0,.45);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(217,184,113,.14), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(110,168,254,.12), transparent 55%),
+      var(--bg);
+    line-height:1.55;
+  }
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+
+  /* Header */
+  header{
+    position:sticky;top:0;z-index:20;
+    backdrop-filter:saturate(140%) blur(10px);
+    background:rgba(11,15,26,.72);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.4px}
+  .logo{
+    width:34px;height:34px;flex:0 0 auto;
+    display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--gold-2),var(--gold));
+    color:#3a2c07;border-radius:9px;font-size:18px;
+    box-shadow:0 6px 18px rgba(217,184,113,.35);
+  }
+  .brand small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+  .nav .cta{
+    display:inline-block;padding:10px 18px;border-radius:999px;
+    background:linear-gradient(135deg,var(--gold-2),var(--gold));
+    color:#3a2c07;font-weight:700;text-decoration:none;font-size:14px;
+    box-shadow:0 8px 22px rgba(217,184,113,.28);
+  }
+  .nav .cta:hover{filter:brightness(1.05)}
+
+  /* Hero */
+  .hero{padding:74px 0 46px}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    color:var(--gold-2);font-weight:600;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:var(--panel);
+  }
+  h1{font-size:clamp(34px,5vw,54px);line-height:1.08;margin:18px 0 14px;letter-spacing:-.5px}
+  h1 span{background:linear-gradient(120deg,var(--gold-2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:18px;color:var(--muted);max-width:52ch}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+  .btn{
+    display:inline-block;padding:14px 26px;border-radius:999px;font-weight:700;text-decoration:none;cursor:pointer;border:1px solid transparent;font-size:15px;
+  }
+  .btn-gold{background:linear-gradient(135deg,var(--gold-2),var(--gold));color:#3a2c07;box-shadow:0 10px 26px rgba(217,184,113,.3)}
+  .btn-gold:hover{filter:brightness(1.05)}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--gold)}
+
+  .badges{display:flex;gap:22px;margin-top:30px;flex-wrap:wrap}
+  .badge{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:14px}
+  .badge b{color:var(--text)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(126,224,168,.15)}
+
+  .hero-card{
+    background:linear-gradient(180deg,var(--panel),var(--bg-soft));
+    border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--shadow);
+  }
+  .hero-card h3{margin:0 0 4px;font-size:18px}
+  .hero-card p{margin:0 0 18px;color:var(--muted);font-size:14px}
+  .steps{display:grid;gap:14px}
+  .step{display:flex;gap:14px;align-items:flex-start}
+  .step .n{
+    width:30px;height:30px;flex:0 0 auto;border-radius:9px;display:grid;place-items:center;
+    background:var(--panel-2);border:1px solid var(--line);color:var(--gold-2);font-weight:700;font-size:14px;
+  }
+  .step b{display:block;font-size:15px}
+  .step small{color:var(--muted)}
+
+  /* Trust strip */
+  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:rgba(20,27,45,.5)}
+  .strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:22px 22px}
+  .stat b{display:block;font-size:24px;background:linear-gradient(120deg,var(--gold-2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat span{color:var(--muted);font-size:13px}
+
+  /* Form section */
+  .form-section{padding:64px 0 30px}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 34px}
+  .section-head h2{font-size:clamp(26px,3.6vw,38px);margin:0 0 10px}
+  .section-head p{color:var(--muted);margin:0}
+
+  form{
+    background:linear-gradient(180deg,var(--panel),var(--bg-soft));
+    border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:var(--shadow);
+  }
+  fieldset{border:none;padding:0;margin:0 0 30px}
+  legend{
+    font-size:13px;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold-2);
+    font-weight:700;padding:0;margin-bottom:16px;display:flex;align-items:center;gap:10px;width:100%;
+  }
+  legend::after{content:"";flex:1;height:1px;background:var(--line)}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .field{display:flex;flex-direction:column;gap:7px}
+  .field.full{grid-column:1/-1}
+  label{font-size:14px;font-weight:600}
+  label .req{color:var(--gold-2)}
+  .hint{font-size:12px;color:var(--muted);font-weight:400}
+  input,select,textarea{
+    width:100%;padding:12px 14px;border-radius:10px;font-size:15px;color:var(--text);
+    background:var(--bg-soft);border:1px solid var(--line);outline:none;font-family:inherit;
+    transition:border-color .15s,box-shadow .15s;
+  }
+  input::placeholder,textarea::placeholder{color:#637099}
+  input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,184,113,.15)}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239aa6c2' d='M6 8 0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
+  textarea{resize:vertical;min-height:96px}
+  .radio-row{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{position:relative}
+  .chip input{position:absolute;opacity:0;inset:0;cursor:pointer}
+  .chip span{
+    display:inline-block;padding:10px 16px;border-radius:999px;border:1px solid var(--line);
+    background:var(--bg-soft);font-size:14px;cursor:pointer;transition:.15s;user-select:none;
+  }
+  .chip input:checked + span{border-color:var(--gold);background:rgba(217,184,113,.14);color:var(--gold-2);font-weight:600}
+  .chip input:focus-visible + span{box-shadow:0 0 0 3px rgba(217,184,113,.2)}
+
+  /* File upload */
+  .drop{
+    grid-column:1/-1;border:1.5px dashed var(--line);border-radius:14px;padding:26px;text-align:center;
+    background:var(--bg-soft);cursor:pointer;transition:.15s;
+  }
+  .drop:hover,.drop.drag{border-color:var(--gold);background:rgba(217,184,113,.06)}
+  .drop .ico{font-size:30px}
+  .drop b{display:block;margin-top:6px}
+  .drop small{color:var(--muted)}
+  .previews{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:12px;margin-top:16px}
+  .thumb{position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:1;background:var(--panel-2)}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb button{
+    position:absolute;top:5px;right:5px;width:22px;height:22px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(0,0,0,.65);color:#fff;font-size:13px;line-height:1;display:grid;place-items:center;
+  }
+
+  .consent{display:flex;gap:12px;align-items:flex-start;margin-top:4px}
+  .consent input{width:18px;height:18px;margin-top:2px;flex:0 0 auto}
+  .consent label{font-weight:400;color:var(--muted);font-size:13px}
+
+  .submit-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:8px}
+  .submit-row .btn{border:none}
+  .note{color:var(--muted);font-size:13px}
+  .error{color:var(--danger);font-size:13px;margin-top:6px;display:none}
+  .field.invalid input,.field.invalid select{border-color:var(--danger)}
+  .field.invalid .error{display:block}
+
+  /* Success */
+  .success{
+    display:none;text-align:center;padding:44px 26px;
+  }
+  .success .check{
+    width:66px;height:66px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;font-size:32px;
+    background:rgba(126,224,168,.15);color:var(--ok);border:1px solid rgba(126,224,168,.4);
+  }
+  .success h3{font-size:24px;margin:0 0 8px}
+  .success p{color:var(--muted);max-width:46ch;margin:0 auto 20px}
+  .summary{
+    text-align:left;max-width:560px;margin:0 auto;background:var(--bg-soft);border:1px solid var(--line);
+    border-radius:12px;padding:18px 20px;font-size:14px;
+  }
+  .summary div{display:flex;justify-content:space-between;gap:16px;padding:6px 0;border-bottom:1px dashed var(--line)}
+  .summary div:last-child{border-bottom:none}
+  .summary span:first-child{color:var(--muted)}
+  .summary span:last-child{text-align:right;font-weight:600}
+
+  /* FAQ / footer */
+  footer{border-top:1px solid var(--line);margin-top:60px;padding:34px 0;color:var(--muted);font-size:14px}
+  .foot-grid{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+
+  @media (max-width:860px){
+    .hero-grid{grid-template-columns:1fr;gap:30px}
+    .strip .wrap{grid-template-columns:repeat(2,1fr)}
+    .grid,.grid-3{grid-template-columns:1fr}
+    form{padding:22px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <div class="logo">◆</div>
+      <div>Brilliant Offer<small>Diamond Buyers</small></div>
+    </div>
+    <a class="cta" href="#valuation">Get My Offer</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">◆ Free · No-obligation valuation</span>
+      <h1>Turn your diamond into <span>cash</span> — fast &amp; fair.</h1>
+      <p class="lede">Submit your diamond jewelry details and photos below. Our gemologists review every submission and send you a real cash offer, usually within one business day. No middlemen, no pressure.</p>
+      <div class="hero-cta">
+        <a class="btn btn-gold" href="#valuation">Start My Free Valuation</a>
+        <a class="btn btn-ghost" href="#how">How it works</a>
+      </div>
+      <div class="badges">
+        <div class="badge"><span class="dot"></span><b>Insured</b>&nbsp;shipping</div>
+        <div class="badge"><span class="dot"></span><b>GIA-trained</b>&nbsp;appraisers</div>
+        <div class="badge"><span class="dot"></span><b>Same-day</b>&nbsp;payment</div>
+      </div>
+    </div>
+
+    <div class="hero-card" id="how">
+      <h3>How it works</h3>
+      <p>Three simple steps from your jewelry box to your bank account.</p>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><div><b>Submit the form</b><small>Tell us about your diamond and add photos.</small></div></div>
+        <div class="step"><div class="n">2</div><div><b>Get your offer</b><small>We review and email a firm cash offer — usually within 24 hours.</small></div></div>
+        <div class="step"><div class="n">3</div><div><b>Ship &amp; get paid</b><small>Accept the offer, ship insured for free, get paid same day it arrives.</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="wrap">
+    <div class="stat"><b>$8M+</b><span>Paid out to sellers</span></div>
+    <div class="stat"><b>24 hrs</b><span>Average offer time</span></div>
+    <div class="stat"><b>4.9★</b><span>Seller rating</span></div>
+    <div class="stat"><b>100%</b><span>Free &amp; insured</span></div>
+  </div>
+</div>
+
+<!-- FORM -->
+<section class="form-section" id="valuation">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Get your diamond valued</h2>
+      <p>The more detail you provide, the more accurate and competitive your offer. Fields marked <span style="color:var(--gold-2)">◆</span> are required.</p>
+    </div>
+
+    <form id="valuationForm" novalidate>
+      <!-- Contact -->
+      <fieldset>
+        <legend>Your contact details</legend>
+        <div class="grid">
+          <div class="field">
+            <label>Full name <span class="req">◆</span></label>
+            <input type="text" name="name" placeholder="Jane Doe" required>
+            <div class="error">Please enter your name.</div>
+          </div>
+          <div class="field">
+            <label>Email <span class="req">◆</span></label>
+            <input type="email" name="email" placeholder="jane@example.com" required>
+            <div class="error">Please enter a valid email.</div>
+          </div>
+          <div class="field">
+            <label>Phone</label>
+            <input type="tel" name="phone" placeholder="(555) 123-4567">
+          </div>
+          <div class="field">
+            <label>City / State <span class="hint">— for shipping</span></label>
+            <input type="text" name="location" placeholder="Austin, TX">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Item -->
+      <fieldset>
+        <legend>About the piece</legend>
+        <div class="grid">
+          <div class="field full">
+            <label>What are you selling? <span class="req">◆</span></label>
+            <div class="radio-row">
+              <label class="chip"><input type="radio" name="itemType" value="Loose diamond" required><span>Loose diamond</span></label>
+              <label class="chip"><input type="radio" name="itemType" value="Ring"><span>Ring</span></label>
+              <label class="chip"><input type="radio" name="itemType" value="Earrings"><span>Earrings</span></label>
+              <label class="chip"><input type="radio" name="itemType" value="Necklace / Pendant"><span>Necklace / Pendant</span></label>
+              <label class="chip"><input type="radio" name="itemType" value="Bracelet"><span>Bracelet</span></label>
+              <label class="chip"><input type="radio" name="itemType" value="Other"><span>Other</span></label>
+            </div>
+            <div class="error">Please choose an item type.</div>
+          </div>
+          <div class="field">
+            <label>Metal type <span class="hint">— if set</span></label>
+            <select name="metal">
+              <option value="">Select…</option>
+              <option>Platinum</option>
+              <option>18K White Gold</option>
+              <option>18K Yellow Gold</option>
+              <option>14K White Gold</option>
+              <option>14K Yellow Gold</option>
+              <option>Rose Gold</option>
+              <option>Silver</option>
+              <option>Not sure</option>
+              <option>N/A — loose stone</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Number of diamonds</label>
+            <select name="stoneCount">
+              <option value="">Select…</option>
+              <option>1 (single center stone)</option>
+              <option>Center stone + accents</option>
+              <option>Multiple / cluster</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- The 4 Cs -->
+      <fieldset>
+        <legend>Diamond details — the 4 Cs</legend>
+        <p class="note" style="margin:-6px 0 16px">Don't know a value? Choose "Not sure" — our gemologists confirm everything on inspection.</p>
+        <div class="grid-3">
+          <div class="field">
+            <label>Carat weight (size) <span class="req">◆</span></label>
+            <input type="text" name="carat" placeholder="e.g. 1.25 ct or 'not sure'" required>
+            <div class="error">Please estimate the carat / size.</div>
+          </div>
+          <div class="field">
+            <label>Shape / cut</label>
+            <select name="shape">
+              <option value="">Select…</option>
+              <option>Round Brilliant</option>
+              <option>Princess</option>
+              <option>Cushion</option>
+              <option>Oval</option>
+              <option>Emerald</option>
+              <option>Radiant</option>
+              <option>Pear</option>
+              <option>Marquise</option>
+              <option>Asscher</option>
+              <option>Heart</option>
+              <option>Other / Not sure</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Cut grade</label>
+            <select name="cutGrade">
+              <option value="">Select…</option>
+              <option>Excellent / Ideal</option>
+              <option>Very Good</option>
+              <option>Good</option>
+              <option>Fair</option>
+              <option>Poor</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Color grade</label>
+            <select name="color">
+              <option value="">Select…</option>
+              <option>D (colorless)</option>
+              <option>E</option><option>F</option>
+              <option>G</option><option>H</option>
+              <option>I</option><option>J</option>
+              <option>K–M (faint)</option>
+              <option>Fancy color</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Clarity <span class="req">◆</span></label>
+            <select name="clarity" required>
+              <option value="">Select…</option>
+              <option>FL — Flawless</option>
+              <option>IF — Internally Flawless</option>
+              <option>VVS1</option><option>VVS2</option>
+              <option>VS1</option><option>VS2</option>
+              <option>SI1</option><option>SI2</option>
+              <option>I1</option><option>I2</option><option>I3</option>
+              <option>Not sure</option>
+            </select>
+            <div class="error">Please select a clarity (or "Not sure").</div>
+          </div>
+          <div class="field">
+            <label>Condition</label>
+            <select name="condition">
+              <option value="">Select…</option>
+              <option>Like new</option>
+              <option>Lightly worn</option>
+              <option>Visible wear</option>
+              <option>Damaged / chipped</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Certification -->
+      <fieldset>
+        <legend>Certification</legend>
+        <div class="grid">
+          <div class="field">
+            <label>Do you have a certificate / appraisal?</label>
+            <select name="hasCert" id="hasCert">
+              <option value="No">No certificate</option>
+              <option value="Yes">Yes, I have one</option>
+              <option value="Unsure">Not sure</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Lab</label>
+            <select name="certLab">
+              <option value="">Select…</option>
+              <option>GIA</option>
+              <option>IGI</option>
+              <option>AGS</option>
+              <option>EGL</option>
+              <option>Other</option>
+              <option>N/A</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label>Certificate / report number <span class="hint">— if you have it</span></label>
+            <input type="text" name="certNumber" placeholder="e.g. GIA 2141438171">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Photos -->
+      <fieldset>
+        <legend>Photos</legend>
+        <p class="note" style="margin:-6px 0 14px">Add clear photos of the diamond, the setting, any hallmarks, and the certificate if you have one. Good photos get faster, higher offers.</p>
+        <div class="grid">
+          <div class="drop" id="dropZone">
+            <div class="ico">📷</div>
+            <b>Click to upload or drag photos here</b>
+            <small>JPG or PNG · up to 8 photos · max 10&nbsp;MB each</small>
+            <input type="file" id="fileInput" accept="image/*" multiple hidden>
+          </div>
+          <div class="previews" id="previews"></div>
+        </div>
+      </fieldset>
+
+      <!-- Notes + price -->
+      <fieldset>
+        <legend>Anything else?</legend>
+        <div class="grid">
+          <div class="field">
+            <label>Your asking price <span class="hint">— optional</span></label>
+            <input type="text" name="askingPrice" placeholder="$ (leave blank for our best offer)">
+          </div>
+          <div class="field">
+            <label>How soon do you want to sell?</label>
+            <select name="timeline">
+              <option value="">Select…</option>
+              <option>As soon as possible</option>
+              <option>Within a few weeks</option>
+              <option>Just exploring value</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label>Notes for our appraiser</label>
+            <textarea name="notes" placeholder="Original purchase info, inscriptions, repairs, or anything else that helps us value your piece."></textarea>
+          </div>
+        </div>
+        <div class="consent">
+          <input type="checkbox" id="consent" name="consent" required>
+          <label for="consent">I confirm the information above is accurate and I'd like a free, no-obligation valuation. I understand this is an estimate and final offers are confirmed after inspection. <span class="req" style="color:var(--gold-2)">◆</span></label>
+        </div>
+        <div class="error" id="consentError" style="margin-left:30px">Please confirm to continue.</div>
+      </fieldset>
+
+      <div class="submit-row">
+        <button type="submit" class="btn btn-gold">Get My Cash Offer →</button>
+        <span class="note">🔒 Your details are private and never shared. Free &amp; no obligation.</span>
+      </div>
+    </form>
+
+    <!-- Success -->
+    <div class="success" id="success">
+      <div class="check">✓</div>
+      <h3>Thank you — your diamond is on our review desk.</h3>
+      <p>We've received your submission. One of our gemologists will review your details and email your cash offer, usually within one business day.</p>
+      <div class="summary" id="summary"></div>
+      <div style="margin-top:24px"><button class="btn btn-ghost" id="againBtn">Submit another piece</button></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="brand"><div class="logo">◆</div><div>Brilliant Offer<small>Diamond Buyers</small></div></div>
+    <div>© <span id="yr"></span> Brilliant Offer · Free, insured, no-obligation diamond buying.</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  /* ---------- Photo uploads ---------- */
+  const dropZone = document.getElementById('dropZone');
+  const fileInput = document.getElementById('fileInput');
+  const previews = document.getElementById('previews');
+  let files = [];
+  const MAX_FILES = 8;
+  const MAX_SIZE = 10 * 1024 * 1024;
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  ['dragover','dragenter'].forEach(e => dropZone.addEventListener(e, ev => {ev.preventDefault(); dropZone.classList.add('drag');}));
+  ['dragleave','drop'].forEach(e => dropZone.addEventListener(e, ev => {ev.preventDefault(); dropZone.classList.remove('drag');}));
+  dropZone.addEventListener('drop', ev => addFiles(ev.dataTransfer.files));
+  fileInput.addEventListener('change', () => addFiles(fileInput.files));
+
+  function addFiles(list){
+    for (const f of list){
+      if (!f.type.startsWith('image/')) continue;
+      if (f.size > MAX_SIZE){ alert(`"${f.name}" is larger than 10 MB and was skipped.`); continue; }
+      if (files.length >= MAX_FILES){ alert(`You can upload up to ${MAX_FILES} photos.`); break; }
+      files.push(f);
+    }
+    renderPreviews();
+  }
+
+  function renderPreviews(){
+    previews.innerHTML = '';
+    files.forEach((f, i) => {
+      const url = URL.createObjectURL(f);
+      const div = document.createElement('div');
+      div.className = 'thumb';
+      div.innerHTML = `<img src="${url}" alt=""><button type="button" title="Remove">×</button>`;
+      div.querySelector('button').addEventListener('click', () => { files.splice(i,1); renderPreviews(); });
+      previews.appendChild(div);
+    });
+  }
+
+  /* ---------- Validation + submit ---------- */
+  const form = document.getElementById('valuationForm');
+  const success = document.getElementById('success');
+
+  function markInvalid(input, bad){
+    const field = input.closest('.field');
+    if (field) field.classList.toggle('invalid', bad);
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let ok = true;
+
+    // required text/email/radio fields
+    form.querySelectorAll('[required]').forEach(el => {
+      if (el.type === 'checkbox') return;
+      if (el.type === 'radio'){
+        const group = form.querySelectorAll(`[name="${el.name}"]`);
+        const chosen = [...group].some(r => r.checked);
+        const field = el.closest('.field');
+        if (field) field.classList.toggle('invalid', !chosen);
+        if (!chosen) ok = false;
+        return;
+      }
+      let bad = !el.value.trim();
+      if (el.type === 'email' && el.value.trim()){
+        bad = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim());
+      }
+      markInvalid(el, bad);
+      if (bad) ok = false;
+    });
+
+    // consent
+    const consent = document.getElementById('consent');
+    document.getElementById('consentError').style.display = consent.checked ? 'none' : 'block';
+    if (!consent.checked) ok = false;
+
+    if (!ok){
+      const firstBad = form.querySelector('.invalid, #consentError[style*="block"]');
+      (form.querySelector('.invalid') || consent).scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+
+    /* Build a summary. NOTE for the site owner:
+       This demo captures the submission client-side. To receive submissions
+       (with photo attachments) by email, connect the form to a backend or a
+       form service — see README.md for a 5-minute setup. */
+    const data = new FormData(form);
+    const get = k => (data.get(k) || '').toString().trim();
+
+    const rows = [
+      ['Name', get('name')],
+      ['Email', get('email')],
+      ['Phone', get('phone') || '—'],
+      ['Location', get('location') || '—'],
+      ['Item', get('itemType')],
+      ['Metal', get('metal') || '—'],
+      ['Carat / size', get('carat')],
+      ['Shape', get('shape') || '—'],
+      ['Cut · Color · Clarity', [get('cutGrade'), get('color'), get('clarity')].filter(Boolean).join(' · ') || '—'],
+      ['Certificate', get('hasCert') === 'Yes' ? `${get('certLab') || 'Lab'} ${get('certNumber') || ''}`.trim() : get('hasCert')],
+      ['Photos attached', String(files.length)],
+      ['Asking price', get('askingPrice') || 'Best offer'],
+    ];
+
+    document.getElementById('summary').innerHTML =
+      rows.map(([k,v]) => `<div><span>${k}</span><span>${(v||'—').replace(/[<>]/g,'')}</span></div>`).join('');
+
+    form.style.display = 'none';
+    success.style.display = 'block';
+    success.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+  // clear invalid state as user types
+  form.addEventListener('input', e => {
+    const field = e.target.closest('.field');
+    if (field) field.classList.remove('invalid');
+  });
+
+  document.getElementById('againBtn').addEventListener('click', () => {
+    form.reset(); files = []; renderPreviews();
+    success.style.display = 'none'; form.style.display = 'block';
+    form.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+</script>
+</body>
+</html>
