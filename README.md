@@ -1,4 +1,4 @@
-# Brilliant Offer — Diamond Valuation Landing Page
+# Dollars4Diamonds — Diamond Valuation Landing Page
 
 A single-file landing page (`index.html`) for an online diamond-buying / pawn service.
 Visitors fill out a detailed intake form so you can make a buy offer on their diamond jewelry.
@@ -37,7 +37,7 @@ For file attachments to arrive by email, the endpoint must accept
 
 ## Customizing
 
-- **Branding:** search for `Brilliant Offer` and the `◆` logo to rename.
+- **Branding:** search for `Dollars4Diamonds` and the `◆` logo to rename.
 - **Colors:** edit the CSS variables in `:root` at the top of `index.html`
   (`--gold`, `--accent`, `--bg`, etc.).
 - **Stats/trust strip:** the `$8M+`, `24 hrs`, `4.9★`, `100%` numbers are placeholders.
