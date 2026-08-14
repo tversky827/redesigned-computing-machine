@@ -243,3 +243,13 @@
   .faq .a{padding:0 22px 18px;color:#37455e;font-size:15px;line-height:1.72}
   .faq .a p{margin:0 0 8px}
   .faq .a p:last-child{margin-bottom:0}
+
+
+  /* ===== "How we make your offer" ===== */
+  .offer-section{padding:44px 0 8px}
+  .offer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:6px}
+  .offer-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow-sm)}
+  .offer-card .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:var(--primary-soft);color:var(--primary);font-size:22px;margin-bottom:12px}
+  .offer-card h3{margin:0 0 6px;font-size:17px;color:var(--text)}
+  .offer-card p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.6}
+  @media (max-width:860px){ .offer-grid{grid-template-columns:1fr} }
