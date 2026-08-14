@@ -268,7 +268,7 @@
   <div class="wrap">
     <div class="section-head">
       <h2>Get your diamond valued</h2>
-      <p>The more detail you provide, the more accurate and competitive your offer. Fields marked <span style="color:var(--gold-2)">◆</span> are required.</p>
+      <p>The more detail you provide, the more accurate and competitive your offer. Fields marked <span style="color:var(--primary)">◆</span> are required.</p>
     </div>
 
     <form id="valuationForm" novalidate>
@@ -491,7 +491,7 @@
         </div>
         <div class="consent">
           <input type="checkbox" id="consent" name="consent" required>
-          <label for="consent">I confirm the information above is accurate and I'd like a free, no-obligation valuation. I understand this is an estimate and final offers are confirmed after inspection. <span class="req" style="color:var(--gold-2)">◆</span></label>
+          <label for="consent">I confirm the information above is accurate and I'd like a free, no-obligation valuation. I understand this is an estimate and final offers are confirmed after inspection. <span class="req">◆</span></label>
         </div>
         <div class="error" id="consentError" style="margin-left:30px">Please confirm to continue.</div>
       </fieldset>
@@ -579,7 +579,53 @@
     if (field) field.classList.toggle('invalid', bad);
   }
 
-  form.addEventListener('submit', e => {
+  /* ---------- Web3Forms delivery ----------
+     Submissions email to the address tied to this access key
+     (offers@diamonds2dollars.com). */
+  const ACCESS_KEY = 'f2772788-420c-4bd1-9029-6fd501c0cb6f';
+  const ATTACH_LIMIT = 9 * 1024 * 1024; // ~9 MB total of photos we attempt to attach
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  function buildSummary(get){
+    const rows = [
+      ['Name', get('name')],
+      ['Email', get('email')],
+      ['Phone', get('phone') || '—'],
+      ['Location', get('location') || '—'],
+      ['Item', get('itemType')],
+      ['Metal', get('metal') || '—'],
+      ['Carat / size', get('carat')],
+      ['Shape', get('shape') || '—'],
+      ['Cut · Color · Clarity', [get('cutGrade'), get('color'), get('clarity')].filter(Boolean).join(' · ') || '—'],
+      ['Certificate', get('hasCert') === 'Yes' ? `${get('certLab') || 'Lab'} ${get('certNumber') || ''}`.trim() : get('hasCert')],
+      ['Photos attached', String(files.length)],
+      ['Asking price', get('askingPrice') || 'Best offer'],
+    ];
+    document.getElementById('summary').innerHTML =
+      rows.map(([k,v]) => `<div><span>${k}</span><span>${(v||'—').replace(/[<>]/g,'')}</span></div>`).join('');
+  }
+
+  async function sendToWeb3Forms(includeFiles, get){
+    const fd = new FormData(form);
+    fd.append('access_key', ACCESS_KEY);
+    fd.append('subject', 'New diamond valuation request — ' + (get('name') || 'Website lead'));
+    fd.append('from_name', 'Diamonds2Dollars website');
+    if (get('email')) fd.append('replyto', get('email'));
+    fd.append('botcheck', '');
+    fd.append('Photos submitted', String(files.length));
+    if (includeFiles){
+      files.forEach((f, i) => fd.append('photo_' + (i + 1), f, f.name));
+    } else if (files.length){
+      fd.append('Photos note', files.length + ' photo(s) were too large to email — reply to the customer to request them.');
+    }
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+      const j = await res.json().catch(() => ({}));
+      return res.ok && j.success;
+    } catch (_) { return false; }
+  }
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     let ok = true;
 
@@ -613,31 +659,30 @@
       return;
     }
 
-    /* Build a summary. NOTE for the site owner:
-       This demo captures the submission client-side. To receive submissions
-       (with photo attachments) by email, connect the form to a backend or a
-       form service — see README.md for a 5-minute setup. */
     const data = new FormData(form);
     const get = k => (data.get(k) || '').toString().trim();
 
-    const rows = [
-      ['Name', get('name')],
-      ['Email', get('email')],
-      ['Phone', get('phone') || '—'],
-      ['Location', get('location') || '—'],
-      ['Item', get('itemType')],
-      ['Metal', get('metal') || '—'],
-      ['Carat / size', get('carat')],
-      ['Shape', get('shape') || '—'],
-      ['Cut · Color · Clarity', [get('cutGrade'), get('color'), get('clarity')].filter(Boolean).join(' · ') || '—'],
-      ['Certificate', get('hasCert') === 'Yes' ? `${get('certLab') || 'Lab'} ${get('certNumber') || ''}`.trim() : get('hasCert')],
-      ['Photos attached', String(files.length)],
-      ['Asking price', get('askingPrice') || 'Best offer'],
-    ];
+    // Sending state
+    const originalLabel = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
 
-    document.getElementById('summary').innerHTML =
-      rows.map(([k,v]) => `<div><span>${k}</span><span>${(v||'—').replace(/[<>]/g,'')}</span></div>`).join('');
+    // Attach photos only if the total is within a safe size; otherwise send
+    // the details reliably and note the photos for follow-up.
+    const totalSize = files.reduce((s, f) => s + f.size, 0);
+    const withFiles = totalSize <= ATTACH_LIMIT;
+    let sent = await sendToWeb3Forms(withFiles, get);
+    if (!sent && withFiles) sent = await sendToWeb3Forms(false, get); // retry without heavy attachments
 
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalLabel;
+
+    if (!sent){
+      alert('Sorry — something went wrong sending your request. Please try again, or email us directly at offers@diamonds2dollars.com.');
+      return;
+    }
+
+    buildSummary(get);
     form.style.display = 'none';
     success.style.display = 'block';
     success.scrollIntoView({behavior:'smooth', block:'start'});
