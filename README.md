@@ -1,44 +1,39 @@
-# Diamonds2Dollars — Diamond Valuation Landing Page
+# Diamonds2Dollars
 
-A single-file landing page (`index.html`) for an online diamond-buying / pawn service.
-Visitors fill out a detailed intake form so you can make a buy offer on their diamond jewelry.
+Online diamond & jewelry buying website. Customers submit an item, receive an
+offer from the buying team, and (if they accept) ship insured and get paid.
 
-## What the form collects
+Static site hosted on **Cloudflare Pages** (auto-deploys from `main`). No build step.
 
-- **Contact:** name, email, phone, city/state (for shipping)
-- **The piece:** item type (loose stone, ring, earrings, etc.), metal, number of diamonds
-- **The 4 Cs:** carat/size, shape, cut grade, color, clarity, condition
-- **Certification:** whether they have one, lab (GIA/IGI/AGS/EGL), report number
-- **Photos:** drag-and-drop upload with previews (diamond, setting, hallmarks, certificate)
-- **Extras:** asking price, timeline, free-text notes, and a consent checkbox
+## Files
+| File | Purpose |
+|---|---|
+| `index.html` | Homepage: hero, trust sections, **multi-step submission wizard**, contact |
+| `wizard.js` | The data-driven multi-step form (dynamic fields, photo/doc upload, submit → email) |
+| `config.js` | **Central business configuration** — edit business info in one place |
+| `styles.css` | Shared stylesheet for every page |
+| `faq.html` / `privacy.html` / `terms.html` | Support & legal pages |
+| `sell-*.html`, `how-much-is-my-diamond-worth.html` | SEO landing pages |
+| `favicon.svg` / `og.png` | Brand favicon and social/link-preview image |
+| `sitemap.xml` / `robots.txt` | Technical SEO |
 
-The form validates required fields and shows a confirmation summary on submit.
+## Business configuration
+Edit `config.js`. Values marked `[PLACEHOLDER]` need real business info:
+- `phone` — leave `""` to hide all phone UI; set it to reveal call links everywhere
+- `turnstileSiteKey` — free Cloudflare Turnstile key to enable bot protection
+- `cfAnalyticsToken` — free Cloudflare Web Analytics token to enable analytics
+- `legalName`, `address`, `hours`, `offerExpirationDays`, social links
 
-## Running it
+## How submissions work today
+The wizard emails each submission (with photos/documents attached, size permitting)
+to `offers@diamonds2dollars.com` via **Web3Forms**, and shows the customer a
+confirmation with a reference number. There is **no database, admin dashboard,
+offer-accept system, or customer login** — those require a backend (see below).
 
-It's a static page — just open `index.html` in a browser, or host it anywhere
-(GitHub Pages, Netlify, Vercel, S3, etc.). No build step, no dependencies.
-
-## Receiving submissions (important)
-
-Out of the box the form captures everything **client-side** and shows the seller a
-confirmation. To actually receive submissions in your inbox — including the uploaded
-photos — connect the form to a backend or a hosted form service. The quickest option:
-
-1. Create a free endpoint at a form service (e.g. Formspree, Basin, Web3Forms).
-2. In `index.html`, find the `<form id="valuationForm" ...>` tag and add
-   `action="https://YOUR-ENDPOINT" method="POST"` and `enctype="multipart/form-data"`.
-3. In the submit handler (`form.addEventListener('submit', ...)`), replace the
-   client-side summary block with `form.submit()` after validation passes, or use
-   `fetch()` to POST the `FormData` to your endpoint.
-
-For file attachments to arrive by email, the endpoint must accept
-`multipart/form-data`. Wire the `files` array into the `FormData` before sending.
-
-## Customizing
-
-- **Branding:** search for `Diamonds2Dollars` and the `◆` logo to rename.
-- **Colors:** edit the CSS variables in `:root` at the top of `index.html`
-  (`--gold`, `--accent`, `--bg`, etc.).
-- **Stats/trust strip:** the `$8M+`, `24 hrs`, `4.9★`, `100%` numbers are placeholders.
-- **Copy:** hero headline, "How it works" steps, and footer are all inline and easy to edit.
+## Phase 2 — backend (not yet built)
+A real admin pipeline, stored offers with accept/decline, customer portal,
+transactional emails, private document storage, and admin analytics require a
+server-side layer. Recommended Cloudflare-native stack: **Pages Functions + D1
+(database) + R2 (private file storage) + Cloudflare Access (admin auth) + a
+transactional email provider (e.g. Resend)**. This needs provisioning in the
+Cloudflare account and API keys.
