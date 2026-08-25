@@ -327,6 +327,7 @@
   }
   function reviewRows() {
     var rows = [];
+    if (!state.values.preferredContact) state.values.preferredContact = "Email";
     var order = ["itemType", "diamondType", "carat", "shape", "color", "clarity", "cut", "polish", "symmetry", "fluorescence", "numberOfStones", "metal", "brand", "ringSize", "otherDescription", "condition", "age", "certLab", "certNumber", "purchasePrice", "purchaseDate", "retailer", "firstName", "lastName", "email", "phone", "zip", "preferredContact"];
     order.forEach(function (k) {
       var v = state.values[k];
@@ -369,6 +370,12 @@
     var ts = document.querySelector('[name="cf-turnstile-response"]');
     if (ts && ts.value) fd.append("cf-turnstile-response", ts.value);
     fd.append("Submission #", ref);
+    // A clean, readable lead summary as the email body
+    var summary = "NEW DIAMOND SUBMISSION\nSubmission #: " + ref + "\n\n" +
+      reviewRows().map(function (r) { return r[0] + ": " + r[1]; }).join("\n") +
+      "\n\nReply directly to this email to reach the customer" +
+      (state.values.email ? " (" + state.values.email + ")." : ".");
+    fd.append("message", summary);
     reviewRows().forEach(function (r) { fd.append(r[0], r[1]); });
     if (includeFiles) allFiles().forEach(function (o) { fd.append(o.field, o.file, o.file.name); });
     else if (allFiles().length) fd.append("Attachments note", allFiles().length + " file(s) were too large to email — reply to the customer to request them.");
