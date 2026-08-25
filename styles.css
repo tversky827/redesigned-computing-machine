@@ -315,3 +315,7 @@ footer .brand .logo svg{filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))}
   .prose a.btn-gold:hover{color:#fff}
   .prose a.btn-ghost{color:var(--ink)}
   .prose a.btn{text-decoration:none;font-weight:600}
+
+  /* ===== "Safe from the moment you ship" band ===== */
+  .safe-section{background:var(--navy-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:74px 0}
+  .safe-foot{text-align:center;color:var(--ink-soft);font-size:15.5px;margin:30px auto 0;max-width:62ch}
