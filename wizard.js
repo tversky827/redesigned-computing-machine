@@ -20,6 +20,18 @@
   var step = 0;
 
   var ITEM_TYPES = ["Diamond", "Diamond Ring", "Diamond Earrings", "Diamond Necklace", "Diamond Bracelet", "Other Jewelry"];
+  var ITEM_ICONS = {
+    "Diamond": '<svg viewBox="0 0 24 24"><path d="M6 3h12l3 5-9 13L3 8z"/><path d="M3 8h18M9 3L6 8l6 13 6-13-3-5"/></svg>',
+    "Diamond Ring": '<svg viewBox="0 0 24 24"><circle cx="12" cy="14.5" r="6"/><path d="M9.5 6.5L12 3l2.5 3.5L12 9z"/></svg>',
+    "Diamond Earrings": '<svg viewBox="0 0 24 24"><path d="M8 4.5v3.5"/><circle cx="8" cy="4" r="1"/><circle cx="8" cy="12.5" r="3.4"/><path d="M16 6.5v3"/><circle cx="16" cy="6" r="1"/><circle cx="16" cy="13.5" r="2.6"/></svg>',
+    "Diamond Necklace": '<svg viewBox="0 0 24 24"><path d="M4 4a11 11 0 0 0 16 0"/><path d="M12 13l-2.4 3.8h4.8z"/></svg>',
+    "Diamond Bracelet": '<svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8.5" ry="6"/><path d="M10 5.5l2-2 2 2-2 2z"/></svg>',
+    "Other Jewelry": '<svg viewBox="0 0 24 24"><path d="M12 3l1.7 4.1L18 9l-4.3 1.9L12 15l-1.7-4.1L6 9l4.3-1.9z"/><path d="M18.5 14l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/></svg>'
+  };
+  var UPLOAD_ICONS = {
+    photo: '<svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13.5" r="3.4"/><path d="M8.5 7l1.2-2h4.6l1.2 2"/></svg>',
+    file: '<svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M9.5 12h6M9.5 16h6"/></svg>'
+  };
   var hasDiamond = function () { return state.values.itemType && state.values.itemType !== "Other Jewelry"; };
   var isLoose    = function () { return state.values.itemType === "Diamond"; };
   var hasSetting = function () { return state.values.itemType && state.values.itemType !== "Diamond"; };
@@ -177,7 +189,7 @@
     if (f.type === "cards") {
       var grid = el("div", { class: "wz-cards" });
       f.options.forEach(function (opt) {
-        var c = el("button", { type: "button", class: "wz-cardopt" + (val === opt ? " on" : "") }, "<span class='ic'>◆</span><span>" + esc(opt) + "</span>");
+        var c = el("button", { type: "button", class: "wz-cardopt" + (val === opt ? " on" : "") }, "<span class='ic'>" + (ITEM_ICONS[opt] || "") + "</span><span>" + esc(opt) + "</span>");
         c.onclick = function () { state.values[f.name] = opt; render(); };
         grid.appendChild(c);
       });
@@ -227,7 +239,7 @@
     var accept = f.accept || OK_IMG;
     var isPhoto = f.type === "photo";
     var drop = el("label", { class: "wz-drop" + (isPhoto ? " photo" : "") });
-    drop.innerHTML = "<span class='ico'>" + (isPhoto ? "📷" : "📄") + "</span><b>Tap to add" + (f.multiple ? " photos" : (isPhoto ? " a photo" : " files")) + "</b><small>" +
+    drop.innerHTML = "<span class='ico'>" + (isPhoto ? UPLOAD_ICONS.photo : UPLOAD_ICONS.file) + "</span><b>Tap to add" + (f.multiple ? " photos" : (isPhoto ? " a photo" : " files")) + "</b><small>" +
       (isPhoto ? "or drag &amp; drop" : "PDF or image") + "</small>";
     var input = el("input", { type: "file", accept: accept.join(","), hidden: "hidden" });
     if (f.multiple || !isPhoto) input.setAttribute("multiple", "multiple");
@@ -397,7 +409,7 @@
   function showConfirmation(ref) {
     mount.innerHTML = "";
     var c = el("div", { class: "wz-done" });
-    c.appendChild(el("div", { class: "wz-check" }, "✓"));
+    c.appendChild(el("div", { class: "wz-check" }, '<svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>'));
     c.appendChild(el("h3", null, "We’ve received your submission"));
     c.appendChild(el("p", null, "Your request has been sent to our buying team. We’ll review your item and email your offer — typically within one business day."));
     c.appendChild(el("div", { class: "wz-ref" }, "Submission number<br><b>" + esc(ref) + "</b>"));
