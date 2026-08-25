@@ -309,3 +309,9 @@ footer .brand .logo svg{filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))}
   .hero h1{font-size:clamp(38px,11vw,52px)}
   .prose{padding:26px 22px}
 }
+
+  /* Buttons keep their own text color even inside .prose article text */
+  .prose a.btn-gold{color:#fff}
+  .prose a.btn-gold:hover{color:#fff}
+  .prose a.btn-ghost{color:var(--ink)}
+  .prose a.btn{text-decoration:none;font-weight:600}
